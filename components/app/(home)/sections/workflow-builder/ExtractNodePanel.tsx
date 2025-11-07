@@ -4,18 +4,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
 interface ExtractNodePanelProps {
-  nodeData: any;
+  node: any;
+  nodes?: any[];
   onUpdate: (nodeId: string, updates: any) => void;
   onClose: () => void;
-  onAddMCP: () => void;
+  onDelete?: (nodeId: string) => void;
+  onAddMCP?: () => void;
 }
 
 export default function ExtractNodePanel({
-  nodeData,
+  node,
   onUpdate,
   onClose,
   onAddMCP,
 }: ExtractNodePanelProps) {
+  const nodeData = node?.data;
   const [instructions, setInstructions] = useState(nodeData?.instructions || 'Extract information from the input');
   const [model, setModel] = useState(nodeData?.model || 'gpt-4o');
   const [customModel, setCustomModel] = useState('');
@@ -42,13 +45,13 @@ export default function ExtractNodePanel({
   }, [jsonSchema]);
 
   useEffect(() => {
-    onUpdate(nodeData?.id, {
+    onUpdate(node?.id, {
       instructions,
       model,
       jsonSchema,
       nodeType: 'extract',
     });
-  }, [instructions, model, jsonSchema, nodeData?.id, onUpdate]);
+  }, [instructions, model, jsonSchema, node?.id, onUpdate]);
 
   return (
     <AnimatePresence>
@@ -172,7 +175,7 @@ export default function ExtractNodePanel({
                       <button
                         onClick={() => {
                           const newTools = nodeData.mcpTools.filter((_: any, i: number) => i !== index);
-                          onUpdate(nodeData.id, { mcpTools: newTools });
+                          onUpdate(node.id, { mcpTools: newTools });
                         }}
                         className="w-24 h-24 rounded-4 hover:bg-black-alpha-4 transition-colors flex items-center justify-center group"
                       >
