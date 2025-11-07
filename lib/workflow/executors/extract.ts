@@ -9,7 +9,7 @@ import { substituteVariables } from '../variable-substitution';
 export async function executeExtractNode(
   node: WorkflowNode,
   state: WorkflowState,
-  apiKeys?: { anthropic?: string; groq?: string; openai?: string; firecrawl?: string }
+  apiKeys?: { anthropic?: string; groq?: string; openai?: string }
 ): Promise<any> {
   const { data } = node;
 
@@ -48,9 +48,7 @@ export async function executeExtractNode(
       const tools = data.mcpTools.map((mcp: any) => ({
         type: 'mcp' as const,
         server_label: mcp.name,
-        server_url: mcp.url.includes('{FIRECRAWL_API_KEY}')
-          ? mcp.url.replace('{FIRECRAWL_API_KEY}', apiKeys?.firecrawl || '')
-          : mcp.url,
+        server_url: mcp.url, // Crawl4AI doesn't use API key placeholders
         authorization: mcp.accessToken ? `Bearer ${mcp.accessToken}` : undefined,
         require_approval: 'never' as const,
       }));

@@ -90,7 +90,7 @@ export const WorkflowStateAnnotation = Annotation.Root({
 export class LangGraphExecutor {
   private workflow: Workflow;
   private graph: any; // Compiled StateGraph
-  private apiKeys?: { anthropic?: string; groq?: string; openai?: string; firecrawl?: string; arcade?: string };
+  private apiKeys?: { anthropic?: string; groq?: string; openai?: string; arcade?: string };
   private onNodeUpdate?: (nodeId: string, result: NodeExecutionResult) => void;
   private checkpointer: MemorySaver;
   private parallelNodeIds = new Set<string>();
@@ -103,7 +103,7 @@ export class LangGraphExecutor {
   constructor(
     workflow: Workflow,
     onNodeUpdate?: (nodeId: string, result: NodeExecutionResult) => void,
-    apiKeys?: { anthropic?: string; groq?: string; openai?: string; firecrawl?: string; arcade?: string }
+    apiKeys?: { anthropic?: string; groq?: string; openai?: string; arcade?: string }
   ) {
     
     this.workflow = workflow;
@@ -523,19 +523,28 @@ export class LangGraphExecutor {
         const server = mcpServers[0];
         const action = data.mcpAction || 'scrape';
 
-        if (server.name.toLowerCase().includes('firecrawl')) {
-          const FirecrawlApp = (await import('@mendable/firecrawl-js')).default;
-          const firecrawl = new FirecrawlApp({ apiKey: this.apiKeys?.firecrawl });
+        if (server.name.toLowerCase().includes('crawl4ai') || server.name.toLowerCase().includes('firecrawl')) {
+          const CRAWL4AI_SERVICE_URL = process.env.CRAWL4AI_SERVICE_URL || 'http://localhost:8000';
 
           if (action === 'scrape') {
             const url = data.scrapeUrl || state.variables.lastOutput || state.variables.input;
-            const result = await firecrawl.scrape(url, { formats: ['markdown'] });
+            const response = await fetch(`${CRAWL4AI_SERVICE_URL}/scrape`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url, formats: ['markdown', 'html'] }),
+            });
+            const result = await response.json();
             return result.markdown || result;
           }
 
           if (action === 'search') {
             const query = data.searchQuery || state.variables.lastOutput;
-            const result = await firecrawl.search(query, { limit: 5 });
+            const response = await fetch(`${CRAWL4AI_SERVICE_URL}/search`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ query, limit: 5 }),
+            });
+            const result = await response.json();
             return result;
           }
         }
@@ -1027,7 +1036,7 @@ export class LangGraphExecutor {
         return await executeArcadeNode(node, state, this.apiKeys?.arcade);
 
       case 'mcp':
-        return await executeMCPNode(node, state, this.apiKeys?.firecrawl);
+        return await executeMCPNode(node, state, undefined); // No API key needed for Crawl4AI
 
       case 'if-else':
       case 'if / else':
