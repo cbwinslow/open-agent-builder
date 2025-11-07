@@ -168,17 +168,17 @@ Example for Tesla:
 3. Recent price movement trend (up/down/flat over last week)
 4. One key headline if available
 
-Use Firecrawl MCP to search and scrape Yahoo Finance.
+Use Crawl4AI MCP to search and scrape Yahoo Finance.
 
 Format as a brief summary (3-4 sentences).`,
           model: 'anthropic/claude-sonnet-4-20250514',
           outputFormat: 'Text',
           mcpTools: [
             {
-              name: 'Firecrawl',
-              url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+              name: 'Crawl4AI',
+              url: 'http://localhost:8000',
               authType: 'url',
-              label: 'Firecrawl',
+              label: 'Crawl4AI',
             }
           ],
         },
@@ -349,7 +349,7 @@ Make it professional and well-formatted.`,
           noteText: `Yahoo Finance Stock Report
 
 1. Agent searches Yahoo Finance
-2. Uses Firecrawl MCP tools
+2. Uses Crawl4AI MCP tools
 3. Second agent formats report
 4. Professional output
 
@@ -364,15 +364,15 @@ Simple 4-node workflow!`,
           nodeType: 'agent',
           label: 'Research Stock',
           nodeName: 'Research Stock',
-          instructions: 'Search Yahoo Finance for ticker ' + '{{input.ticker}}' + ' and gather:\n- Current price\n- Daily change ($ and %)\n- Market cap\n- P/E ratio\n- 52-week high/low\n- Top 2 recent news headlines\n\nUse Firecrawl MCP to search and scrape the data.',
+          instructions: 'Search Yahoo Finance for ticker ' + '{{input.ticker}}' + ' and gather:\n- Current price\n- Daily change ($ and %)\n- Market cap\n- P/E ratio\n- 52-week high/low\n- Top 2 recent news headlines\n\nUse Crawl4AI MCP to search and scrape the data.',
           model: 'anthropic/claude-sonnet-4-20250514',
           outputFormat: 'Text',
           mcpTools: [
             {
-              name: 'Firecrawl',
-              url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+              name: 'Crawl4AI',
+              url: 'http://localhost:8000',
               authType: 'url',
-              label: 'Firecrawl',
+              label: 'Crawl4AI',
             }
           ],
         },
@@ -642,7 +642,7 @@ return {
     name: 'Amazon Product Research',
     description: 'Research a product on Amazon - get details, reviews, and buying recommendation',
     category: 'E-commerce',
-    tags: ['amazon', 'shopping', 'product', 'firecrawl', 'reviews'],
+    tags: ['amazon', 'shopping', 'product', 'crawl4ai', 'reviews'],
     difficulty: 'simple',
     estimatedTime: '2-3 minutes',
     nodes: [
@@ -692,9 +692,9 @@ Great for: Shopping decisions, price research`,
           nodeName: 'Search & Scrape Amazon',
           instructions: `Search Amazon for: {{input.product}}
 
-1. Use firecrawl_search to find the product on Amazon
+1. Use crawl4ai_search to find the product on Amazon
 2. Identify the most relevant product listing
-3. Use firecrawl_scrape on the product page URL
+3. Use crawl4ai_scrape on the product page URL
 4. Extract key information:
    - Product title
    - Current price
@@ -708,10 +708,10 @@ Return all extracted data in a clear format.`,
           outputFormat: 'Text',
           mcpTools: [
             {
-              name: 'Firecrawl',
-              url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+              name: 'Crawl4AI',
+              url: 'http://localhost:8000',
               authType: 'url',
-              label: 'Firecrawl',
+              label: 'Crawl4AI',
             }
           ],
         },
@@ -781,7 +781,7 @@ Who would benefit most from this product?`,
     name: 'Zillow Property Finder',
     description: 'Find and compare properties on Zillow matching your criteria',
     category: 'Real Estate',
-    tags: ['zillow', 'real-estate', 'property', 'firecrawl', 'loop', 'comparison'],
+    tags: ['zillow', 'real-estate', 'property', 'crawl4ai', 'loop', 'comparison'],
     difficulty: 'intermediate',
     estimatedTime: '4-6 minutes',
     nodes: [
@@ -850,8 +850,8 @@ Intermediate complexity with loops!`,
 '- Max Price: ${{input.max_price}}\n' +
 '- Min Bedrooms: {{input.min_beds}}\n' +
 '\n' +
-'Use firecrawl_search to find properties on Zillow.\n' +
-'Then use firecrawl_scrape on the Zillow search results page.\n' +
+'Use crawl4ai_search to find properties on Zillow.\n' +
+'Then use crawl4ai_scrape on the Zillow search results page.\n' +
 '\n' +
 'Extract and return a JSON array of the top 5 properties with:\n' +
 '{\n' +
@@ -891,10 +891,10 @@ Intermediate complexity with loops!`,
           }),
           mcpTools: [
             {
-              name: 'Firecrawl',
-              url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+              name: 'Crawl4AI',
+              url: 'http://localhost:8000',
               authType: 'url',
-              label: 'Firecrawl',
+              label: 'Crawl4AI',
             }
           ],
         },
@@ -985,7 +985,7 @@ return {
 'Square Feet: {{lastOutput.sqft}}\n' +
 'URL: {{lastOutput.zillow_url}}\n' +
 '\n' +
-'Use firecrawl_scrape to get more details from the Zillow URL if needed.\n' +
+'Use crawl4ai_scrape to get more details from the Zillow URL if needed.\n' +
 '\n' +
 'Provide analysis:\n' +
 '\n' +
@@ -1004,10 +1004,10 @@ return {
           outputFormat: 'Text',
           mcpTools: [
             {
-              name: 'Firecrawl',
-              url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+              name: 'Crawl4AI',
+              url: 'http://localhost:8000',
               authType: 'url',
-              label: 'Firecrawl',
+              label: 'Crawl4AI',
             }
           ],
         },

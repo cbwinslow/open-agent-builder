@@ -122,7 +122,7 @@ function StyleGuidePageContent() {
                 {/* GitHub Template Button */}
                 <a
                   className="contents"
-                  href="https://github.com/firecrawl/firecrawl"
+                  href="https://github.com/crawl4ai/crawl4ai"
                   target="_blank"
                 >
                   <ButtonUI variant="secondary">
@@ -181,7 +181,7 @@ function StyleGuidePageContent() {
                     Turn any website into structured, agent-ready data.
                     <Link
                       className="bg-black-alpha-4 hover:bg-black-alpha-6 lg:ml-4 rounded-6 px-8 lg:px-6 text-label-large lg-max:py-2 h-30 lg:h-24 block lg-max:mt-8 lg-max:mx-auto lg-max:w-max lg:inline-block gap-4 transition-all"
-                      href="https://firecrawl.dev"
+                      href="https://crawl4ai.dev"
                       target="_blank"
                     >
                       AI agent workflows

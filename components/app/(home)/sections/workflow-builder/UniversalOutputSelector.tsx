@@ -40,7 +40,7 @@ export default function UniversalOutputSelector({
       case 'agent':
         return ['message', 'text', 'response'];
       case 'mcp':
-      case 'firecrawl':
+      case 'crawl4ai':
         return ['markdown', 'html', 'json', 'results', 'urls'];
       case 'transform':
         return ['result', 'output', 'data'];

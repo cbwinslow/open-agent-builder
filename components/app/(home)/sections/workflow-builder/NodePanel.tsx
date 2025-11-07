@@ -9,7 +9,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
-import FirecrawlLogo from "@/components/icons/FirecrawlLogo";
+import Crawl4AILogo from "@/components/icons/Crawl4AILogo";
 
 interface NodePanelProps {
   nodeData: {
@@ -705,7 +705,7 @@ export default function NodePanel({
                       mcpServers.map((server: any) => {
                         const isConnected = currentMCPServerIds.includes(server._id);
                         const isExpanded = expandedMcpId === server._id;
-                        const isFirecrawl = server.name === 'Firecrawl' && server.isOfficial;
+                        const isCrawl4AI = server.name === 'Crawl4AI' && server.isOfficial;
 
                         return (
                           <div key={server._id} className="rounded-12 border border-border-faint overflow-hidden bg-accent-white">
@@ -715,7 +715,7 @@ export default function NodePanel({
                             >
                               <div className="flex items-center gap-8">
                                 <span className="text-sm font-medium text-accent-black">{server.name}</span>
-                                {isFirecrawl && (
+                                {isCrawl4AI && (
                                   <span className="px-6 py-2 bg-heat-4 text-heat-100 rounded-6 text-xs border border-heat-100 font-medium">
                                     API Key Required
                                   </span>
@@ -745,9 +745,9 @@ export default function NodePanel({
                                 {server.description && (
                                   <p className="pt-12 text-xs text-black-alpha-64">{server.description}</p>
                                 )}
-                                {isFirecrawl && (
+                                {isCrawl4AI && (
                                   <a
-                                    href="https://www.firecrawl.dev/app/api-keys"
+                                    href="https://www.crawl4ai.dev/app/api-keys"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-xs text-heat-100 hover:text-heat-200 underline block -mt-6"

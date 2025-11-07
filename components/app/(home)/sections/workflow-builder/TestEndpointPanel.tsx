@@ -38,7 +38,7 @@ export default function TestEndpointPanel({ workflowId, workflow, environment, o
   // Generate default payload from input variables
   const defaultPayload = useMemo(() => {
     if (inputVariables.length === 0) {
-      return { input: "https://firecrawl.dev" };
+      return { input: "https://github.com/unclecode/crawl4ai" };
     }
     return inputVariables.reduce((acc: any, v: any) => {
       acc[v.name] = v.defaultValue || '';

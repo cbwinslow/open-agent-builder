@@ -634,7 +634,7 @@ function WorkflowBuilderInner({ onBack, initialWorkflowId, initialTemplateId }: 
     const colorMap: Record<string, string> = {
       'agent': 'bg-blue-500',
       'mcp': 'bg-[#FFEFA4] dark:bg-[#FFDD40]',
-      'firecrawl': 'bg-heat-100',
+      'crawl4ai': 'bg-heat-100',
       'if-else': 'bg-[#FEE7C2] dark:bg-[#FFAE2B]',
       'while': 'bg-[#FEE7C2] dark:bg-[#FFAE2B]',
       'user-approval': 'bg-[#E5E7EB] dark:bg-[#9CA3AF]',
@@ -900,7 +900,7 @@ function WorkflowBuilderInner({ onBack, initialWorkflowId, initialTemplateId }: 
 
       const newNode: Node = {
         id: getId(),
-        type: type === 'firecrawl' ? 'mcp' : type,
+        type: type === 'crawl4ai' ? 'mcp' : type,
         position,
         data: {
           label: (
@@ -915,16 +915,16 @@ function WorkflowBuilderInner({ onBack, initialWorkflowId, initialTemplateId }: 
               <span className="text-sm font-medium text-[#18181b]">{label}</span>
             </div>
           ),
-          nodeType: type === 'firecrawl' ? 'mcp' : type,
+          nodeType: type === 'crawl4ai' ? 'mcp' : type,
           nodeName: label,
-          // Pre-configure Firecrawl MCP if this is a Firecrawl node
-          ...(type === 'firecrawl' && {
+          // Pre-configure Crawl4AI MCP if this is a Crawl4AI node
+          ...(type === 'crawl4ai' && {
             mcpServers: [
               {
-                id: 'firecrawl',
-                name: 'Firecrawl',
-                label: 'firecrawl',
-                url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+                id: 'crawl4ai',
+                name: 'Crawl4AI',
+                label: 'crawl4ai',
+                url: 'https://mcp.crawl4ai.dev/{CRAWL4AI_API_KEY}/v2/mcp',
                 authType: 'Access token / API key',
               },
             ],

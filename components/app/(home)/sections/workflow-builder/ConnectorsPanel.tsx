@@ -22,13 +22,13 @@ interface MCPTemplate {
 
 const MCP_TEMPLATES: MCPTemplate[] = [
   {
-    id: 'firecrawl',
-    name: 'Firecrawl',
+    id: 'crawl4ai',
+    name: 'Crawl4AI',
     description: 'Web scraping, searching, and data extraction',
-    url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
+    url: 'https://mcp.crawl4ai.dev/{CRAWL4AI_API_KEY}/v2/mcp',
     authType: 'api-key',
-    apiKeyPlaceholder: 'FIRECRAWL_API_KEY',
-    tools: ['firecrawl_scrape', 'firecrawl_search', 'firecrawl_map', 'firecrawl_crawl', 'firecrawl_batch_scrape', 'firecrawl_extract', 'firecrawl_check_crawl_status'],
+    apiKeyPlaceholder: 'CRAWL4AI_API_KEY',
+    tools: ['crawl4ai_scrape', 'crawl4ai_search', 'crawl4ai_map', 'crawl4ai_crawl', 'crawl4ai_batch_scrape', 'crawl4ai_extract', 'crawl4ai_check_crawl_status'],
     category: 'web',
   },
   {

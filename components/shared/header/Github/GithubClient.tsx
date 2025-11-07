@@ -7,7 +7,7 @@ export default function HeaderGithubClient() {
   return (
     <a
       className="contents"
-      href="https://github.com/firecrawl/firecrawl"
+      href="https://github.com/unclecode/crawl4ai"
       target="_blank"
     >
       <Button variant="secondary">

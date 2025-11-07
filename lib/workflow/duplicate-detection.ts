@@ -62,10 +62,10 @@ export function detectDuplicateCredentials(workflow: Workflow): DuplicateCredent
 
   credentialMap.forEach((entry) => {
     if (entry.nodeIds.length > 1) {
-      // Skip warnings for common shared services like Firecrawl
-      const isSharedService = entry.serverName.toLowerCase().includes('firecrawl') ||
+      // Skip warnings for common shared services like Crawl4AI
+      const isSharedService = entry.serverName.toLowerCase().includes('crawl4ai') ||
                              entry.serverName.toLowerCase().includes('arcade') ||
-                             entry.serverUrl.includes('firecrawl.dev') ||
+                             entry.serverUrl.includes('crawl4ai.dev') ||
                              entry.serverUrl.includes('arcade.dev');
       
       if (!isSharedService) {

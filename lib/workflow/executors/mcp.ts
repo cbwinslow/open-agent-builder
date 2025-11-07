@@ -120,7 +120,7 @@ async function executeGenericMCPServer(serverConfig: any, state: WorkflowState):
 }
 
 /**
- * Execute MCP Node - Calls MCP server tools (Firecrawl)
+ * Execute MCP Node - Calls MCP server tools (Crawl4AI)
  * Uses API route when running client-side to avoid CORS
  */
 export async function executeMCPNode(
