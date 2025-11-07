@@ -4,7 +4,7 @@ import { Workflow } from '../../types';
  * Example 3: Scrape, Summarize, and Post to Google Docs (MCP + Arcade)
  *
  * This workflow demonstrates a practical multi-step workflow:
- * 1. Scrape content from a URL using Firecrawl MCP
+ * 1. Scrape content from a URL using Crawl4AI MCP
  * 2. Summarize the content with an AI agent
  * 3. Create a Google Doc with the summary using Arcade
  *
@@ -13,7 +13,7 @@ import { Workflow } from '../../types';
  * Use case: Research automation, content curation, report generation
  *
  * REQUIREMENTS:
- * - FIRECRAWL_API_KEY environment variable (for MCP)
+ * - Crawl4AI service running (free and open source!)
  * - ARCADE_API_KEY environment variable (for Google Docs integration)
  * - User authorization for Google Docs access
  * - Workflow executor must support MCP via @langchain/mcp-adapters
@@ -27,7 +27,7 @@ export const scrapeSummarizeDocs: Workflow = {
   name: 'Example 3: Scrape, Summarize & Post to Docs',
   description: 'Scrape a website, summarize content, and create a Google Doc',
   category: 'examples',
-  tags: ['example', 'intermediate', 'firecrawl', 'arcade', 'google-docs'],
+  tags: ['example', 'intermediate', 'crawl4ai', 'arcade', 'google-docs'],
   estimatedTime: '3-5 minutes',
   difficulty: 'intermediate',
   createdAt: new Date().toISOString(),
@@ -74,9 +74,9 @@ export const scrapeSummarizeDocs: Workflow = {
         label: 'Scrape Website',
         nodeType: 'agent',
         nodeName: 'Scrape Website',
-        instructions: `Use Firecrawl MCP tools to scrape the content from this URL: {{input.url}}
+        instructions: `Use Crawl4AI MCP tools to scrape the content from this URL: {{input.url}}
 
-Use the firecrawl_scrape tool with markdown format.
+Use the crawl4ai_scrape tool with markdown format.
 
 Extract the main content, focusing on:
 - Article titles
@@ -88,9 +88,8 @@ Return the scraped content in a clean, organized format.`,
         outputFormat: 'Text',
         mcpTools: [
           {
-            name: 'Firecrawl',
-            url: 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp',
-            accessToken: '${FIRECRAWL_API_KEY}',
+            name: 'Crawl4AI',
+            url: process.env.CRAWL4AI_SERVICE_URL || 'http://localhost:8000',
           },
         ],
       },
