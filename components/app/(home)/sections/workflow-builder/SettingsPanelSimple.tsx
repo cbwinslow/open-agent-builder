@@ -19,7 +19,7 @@ interface ServerAPIConfig {
   anthropicConfigured: boolean;
   groqConfigured: boolean;
   openaiConfigured: boolean;
-  firecrawlConfigured: boolean;
+  crawl4aiConfigured: boolean;
   hasKeys: boolean;
 }
 
@@ -112,14 +112,14 @@ export default function SettingsPanel({ isOpen, onClose }: SettingsPanelProps) {
     if (isOpen) {
       loadConfig();
 
-      // Clean up any non-Firecrawl official MCPs and seed only Firecrawl
+      // Clean up any non-Crawl4AI official MCPs and seed only Crawl4AI
       if (user?.id && mcpServers) {
-        // First clean up any non-Firecrawl official MCPs
+        // First clean up any non-Crawl4AI official MCPs
         cleanupOfficialMCPs({ userId: user.id }).catch(console.error);
 
-        // Then seed Firecrawl if no MCPs exist
-        const hasFirecrawl = mcpServers.some(mcp => mcp.name === "Firecrawl" && mcp.isOfficial);
-        if (!hasFirecrawl) {
+        // Then seed Crawl4AI if no MCPs exist
+        const hasCrawl4AI = mcpServers.some(mcp => mcp.name === "Crawl4AI" && mcp.isOfficial);
+        if (!hasCrawl4AI) {
           seedOfficialMCPs({ userId: user.id }).catch(console.error);
         }
       }
@@ -273,9 +273,9 @@ export default function SettingsPanel({ isOpen, onClose }: SettingsPanelProps) {
                   <h3 className="text-label-large font-medium text-accent-black mb-12">Integrations</h3>
                   <div className="grid grid-cols-1 gap-8">
                     <div className="flex items-center gap-8 p-10 bg-background-base rounded-8 border border-border-faint">
-                      <StatusIcon configured={serverConfig?.firecrawlConfigured || false} />
+                      <StatusIcon configured={serverConfig?.crawl4aiConfigured || true} />
                       <div className="min-w-0">
-                        <p className="text-body-small text-accent-black font-medium truncate">Firecrawl</p>
+                        <p className="text-body-small text-accent-black font-medium truncate">Crawl4AI (Free)</p>
                       </div>
                     </div>
                   </div>
@@ -809,14 +809,14 @@ function MCPCard({
           {server.description && (
             <p className="text-xs text-black-alpha-48 mt-2">{server.description}</p>
           )}
-          {server.name === 'Firecrawl' && server.isOfficial && (
+          {server.name === 'Crawl4AI' && server.isOfficial && (
             <a
-              href="https://www.firecrawl.dev/app/api-keys"
+              href="https://github.com/unclecode/crawl4ai"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-heat-100 hover:text-heat-200 mt-2 underline block"
             >
-              Get API key here →
+              Learn more about Crawl4AI →
             </a>
           )}
         </div>
@@ -978,7 +978,7 @@ function AddMCPModal({ isOpen, onClose, onSave, editingServer }: AddMCPModalProp
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="e.g., Firecrawl"
+              placeholder="e.g., Custom MCP Server"
               className="w-full px-12 py-8 bg-background-base border border-border-faint rounded-8 text-body-small text-accent-black"
             />
           </div>
