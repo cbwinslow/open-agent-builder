@@ -10,7 +10,7 @@ import { resolveMCPServers, migrateMCPData } from '@/lib/mcp/resolver';
 export async function executeAgentNode(
   node: WorkflowNode,
   state: WorkflowState,
-  apiKeys?: { anthropic?: string; groq?: string; openai?: string; firecrawl?: string }
+  apiKeys?: { anthropic?: string; groq?: string; openai?: string }
 ): Promise<any> {
   const { data } = node;
 
@@ -135,11 +135,10 @@ export async function executeAgentNode(
         }
 
         // Build MCP servers configuration
+        // Note: Crawl4AI doesn't use API key placeholders
         const mcpServers = realMcpTools.map((mcp: any) => ({
           type: 'url' as const,
-          url: mcp.url.includes('{FIRECRAWL_API_KEY}')
-            ? mcp.url.replace('{FIRECRAWL_API_KEY}', apiKeys.firecrawl || '')
-            : mcp.url,
+          url: mcp.url,
           name: mcp.name,
           authorization_token: mcp.accessToken,
         }));

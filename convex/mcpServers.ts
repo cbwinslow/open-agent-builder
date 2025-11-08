@@ -171,22 +171,19 @@ export const seedOfficialMCPs = mutation({
       return { message: "Official MCPs already seeded" };
     }
 
-    // Official MCP configuration - Only Firecrawl
+    // Official MCP configuration - Only Crawl4AI
     const officialMCPs = [
       {
-        name: "Firecrawl",
-        url: "https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp",
-        description: "Web scraping, searching, and data extraction (API key required)",
+        name: "Crawl4AI",
+        url: process.env.CRAWL4AI_SERVICE_URL || "http://localhost:8000",
+        description: "Free and open-source web scraping and crawling (no API key required)",
         category: "web",
-        authType: "api-key",
+        authType: "none",
         tools: [
-          "firecrawl_scrape",
-          "firecrawl_search",
-          "firecrawl_crawl",
-          "firecrawl_map",
-          "firecrawl_batch_scrape",
-          "firecrawl_extract",
-          "firecrawl_check_crawl_status"
+          "crawl4ai_scrape",
+          "crawl4ai_map",
+          "crawl4ai_crawl",
+          "crawl4ai_batch_scrape"
         ],
       },
     ];
@@ -198,7 +195,7 @@ export const seedOfficialMCPs = mutation({
           userId,
           ...mcp,
           connectionStatus: "untested",
-          enabled: true, // Firecrawl enabled by default
+          enabled: true, // Crawl4AI enabled by default
           isOfficial: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
@@ -250,7 +247,7 @@ export const updateConnectionStatus = mutation({
   },
 });
 
-// Clean up non-Firecrawl official MCPs
+// Clean up non-Crawl4AI official MCPs
 export const cleanupOfficialMCPs = mutation({
   args: {
     userId: v.string(),
@@ -263,15 +260,15 @@ export const cleanupOfficialMCPs = mutation({
       .filter((q) => q.eq(q.field("isOfficial"), true))
       .collect();
 
-    // Delete any that are not Firecrawl
+    // Delete any that are not Crawl4AI
     let deletedCount = 0;
     for (const mcp of officialMCPs) {
-      if (mcp.name !== "Firecrawl") {
+      if (mcp.name !== "Crawl4AI") {
         await db.delete(mcp._id);
         deletedCount++;
       }
     }
 
-    return { message: `Cleaned up ${deletedCount} non-Firecrawl official MCPs` };
+    return { message: `Cleaned up ${deletedCount} non-Crawl4AI official MCPs` };
   },
 });

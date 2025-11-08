@@ -150,10 +150,10 @@ export default function MCPPanel({
                   >
                     <option value="">Select an MCP server...</option>
                     {mcpServers.map((server) => {
-                      const isFirecrawl = server.name === 'Firecrawl' && server.isOfficial;
+                      const isCrawl4AI = server.name === 'Crawl4AI' && server.isOfficial;
                       return (
                         <option key={server._id} value={server._id}>
-                          {server.name} {isFirecrawl && '(API Key Required)'} {server.tools && `(${server.tools.length} tools)`}
+                          {server.name} {isCrawl4AI && '(API Key Required)'} {server.tools && `(${server.tools.length} tools)`}
                         </option>
                       );
                     })}
@@ -172,7 +172,7 @@ export default function MCPPanel({
                               <h4 className="text-sm font-medium text-accent-black">
                                 {selectedServer.name}
                               </h4>
-                              {selectedServer.name === 'Firecrawl' && selectedServer.isOfficial && (
+                              {selectedServer.name === 'Crawl4AI' && selectedServer.isOfficial && (
                                 <span className="px-6 py-2 bg-heat-4 text-heat-100 rounded-6 text-xs border border-heat-100 font-medium">
                                   API Key Required
                                 </span>
@@ -183,9 +183,9 @@ export default function MCPPanel({
                                 {selectedServer.description}
                               </p>
                             )}
-                            {selectedServer.name === 'Firecrawl' && selectedServer.isOfficial && (
+                            {selectedServer.name === 'Crawl4AI' && selectedServer.isOfficial && (
                               <a
-                                href="https://www.firecrawl.dev/app/api-keys"
+                                href="https://www.crawl4ai.dev/app/api-keys"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-xs text-heat-100 hover:text-heat-200 underline block mb-8"

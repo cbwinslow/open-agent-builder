@@ -37,7 +37,7 @@ const getNodeIcon = (nodeType: string) => {
   const iconMap: Record<string, any> = {
     'agent': Bot,
     'mcp': Plug,
-    'firecrawl': Zap,
+    'crawl4ai': Zap,
     'if-else': GitBranch,
     'while': Repeat,
     'user-approval': CheckCircle,
@@ -54,7 +54,7 @@ const getNodeColor = (nodeType: string) => {
   const colorMap: Record<string, string> = {
     'agent': 'bg-heat-40',
     'mcp': 'bg-teal-500',
-    'firecrawl': 'bg-black-alpha-12',
+    'crawl4ai': 'bg-black-alpha-12',
     'if-else': 'bg-amber-500',
     'while': 'bg-cyan-500',
     'user-approval': 'bg-gray-400',
@@ -179,13 +179,13 @@ export default function ExecutionPanel({
   useEffect(() => {
     if (inputVariables.length > 0) {
       const defaults = inputVariables.reduce((acc: any, v: any) => {
-        acc[v.name] = v.defaultValue || (v.type === 'url' ? 'https://firecrawl.dev' : '');
+        acc[v.name] = v.defaultValue || (v.type === 'url' ? 'https://crawl4ai.dev' : '');
         return acc;
       }, {});
       setInputValues(defaults);
       console.log('Set input values from variables:', defaults);
     } else {
-      setInputValues({ input: 'https://firecrawl.dev' });
+      setInputValues({ input: 'https://github.com/unclecode/crawl4ai' });
       console.log('Set default input value');
     }
   }, [workflow?.id, inputVariables.length]); // Re-initialize when workflow or variables change

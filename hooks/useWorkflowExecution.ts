@@ -29,7 +29,7 @@ const loadStoredApiKeys = () => {
   }
 
   try {
-    const raw = localStorage.getItem('firecrawl_api_keys');
+    const raw = localStorage.getItem('crawl4ai_api_keys');
     if (!raw) {
       return {} as Record<string, string>;
     }

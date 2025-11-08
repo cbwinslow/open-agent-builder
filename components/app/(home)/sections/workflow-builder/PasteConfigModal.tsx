@@ -65,29 +65,29 @@ export default function PasteConfigModal({ isOpen, onClose, onSave }: PasteConfi
               name = 'Context7';
               category = 'ai';
               description = 'Documentation and code assistance';
-            } else if (serverName.includes('firecrawl') || url.includes('firecrawl')) {
-              name = 'Firecrawl';
+            } else if (serverName.includes('crawl4ai') || url.includes('crawl4ai')) {
+              name = 'Crawl4AI';
               category = 'web';
               description = 'Web scraping, searching, and data extraction';
             }
 
           } else if (typedConfig.command === 'npx' && typedConfig.args) {
-            // Handle npx-style configurations (Firecrawl, etc.)
+            // Handle npx-style configurations (Crawl4AI, etc.)
             const packageName = typedConfig.args.find((arg: string) => arg !== '-y' && !arg.startsWith('-'));
 
             // Identify known MCPs
-            if (packageName === 'firecrawl-mcp' || serverName.includes('firecrawl')) {
-              name = 'Firecrawl';
+            if (packageName === 'crawl4ai-mcp' || serverName.includes('crawl4ai')) {
+              name = 'Crawl4AI';
               category = 'web';
               authType = 'api-key';
               description = 'Web scraping, searching, and data extraction';
 
               // Extract API key from env
-              if (typedConfig.env?.FIRECRAWL_API_KEY) {
-                accessToken = typedConfig.env.FIRECRAWL_API_KEY;
-                url = `https://mcp.firecrawl.dev/${accessToken}/v2/mcp`;
+              if (typedConfig.env?.CRAWL4AI_API_KEY) {
+                accessToken = typedConfig.env.CRAWL4AI_API_KEY;
+                url = `https://mcp.crawl4ai.dev/${accessToken}/v2/mcp`;
               } else {
-                url = 'https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp';
+                url = process.env.NEXT_PUBLIC_CRAWL4AI_SERVICE_URL || 'http://localhost:8000';
               }
             } else {
               // Generic MCP server
@@ -183,7 +183,7 @@ export default function PasteConfigModal({ isOpen, onClose, onSave }: PasteConfi
                 Configuration JSON
               </label>
               <a
-                href="https://www.firecrawl.dev/app"
+                href="https://github.com/crawl4ai/crawl4ai/tree/main/examples"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-heat-100 hover:text-heat-200 underline flex items-center gap-4"
@@ -207,14 +207,14 @@ export default function PasteConfigModal({ isOpen, onClose, onSave }: PasteConfi
   }
 }
 
-// Example 2 - NPX format (Firecrawl):
+// Example 2 - NPX format (Crawl4AI):
 {
   "mcpServers": {
-    "firecrawl-mcp": {
+    "crawl4ai-mcp": {
       "command": "npx",
-      "args": ["-y", "firecrawl-mcp"],
+      "args": ["-y", "crawl4ai-mcp"],
       "env": {
-        "FIRECRAWL_API_KEY": "your-api-key"
+        "CRAWL4AI_API_KEY": "your-api-key"
       }
     }
   }
@@ -240,7 +240,7 @@ export default function PasteConfigModal({ isOpen, onClose, onSave }: PasteConfi
                 <p className="text-body-small text-black-alpha-64 mb-6">
                   Supports two formats:
                   <br />• Direct URL with headers (Context7, etc.)
-                  <br />• NPX command format (Firecrawl, Cursor, Cline)
+                  <br />• NPX command format (Crawl4AI, Cursor, Cline)
                   <br />
                   <br />Connections will be tested automatically after import.
                 </p>

@@ -54,9 +54,9 @@ export function getUserFriendlyError(error: Error): string {
     return 'Network error. Please check your connection and try again.';
   }
 
-  // Firecrawl-specific errors
-  if (message.includes('FIRECRAWL')) {
-    return 'Firecrawl API error. Please verify your FIRECRAWL_API_KEY in .env.local';
+  // Crawl4AI-specific errors
+  if (message.includes('CRAWL4AI')) {
+    return 'Crawl4AI API error. Please verify your CRAWL4AI_API_KEY in .env.local';
   }
 
   // Variable substitution errors

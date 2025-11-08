@@ -1,12 +1,13 @@
 import { WorkflowNode, WorkflowState } from '../types';
 import { getMCPServer } from '../storage';
 import { substituteVariables } from '../variable-substitution';
-import FirecrawlApp from '@mendable/firecrawl-js';
-import { getServerAPIKeys } from '@/lib/api/config';
 import { resolveMCPServer } from '@/lib/mcp/resolver';
 
+// Crawl4AI service URL
+const CRAWL4AI_SERVICE_URL = process.env.CRAWL4AI_SERVICE_URL || 'http://localhost:8000';
+
 /**
- * Extract specific field from Firecrawl response
+ * Extract specific field from Crawl4AI response
  */
 function extractField(data: any, field: string, customPath?: string): any {
   if (field === 'full') return data;
@@ -119,7 +120,7 @@ async function executeGenericMCPServer(serverConfig: any, state: WorkflowState):
 }
 
 /**
- * Execute MCP Node - Calls MCP server tools (Firecrawl)
+ * Execute MCP Node - Calls MCP server tools (Crawl4AI)
  * Uses API route when running client-side to avoid CORS
  */
 export async function executeMCPNode(
@@ -158,18 +159,11 @@ export async function executeMCPNode(
   const results: any[] = [];
 
   for (const serverConfig of mcpServers) {
-    // For all servers (including Firecrawl), use API routes
-    if (serverConfig.name.toLowerCase().includes('firecrawl')) {
-      // Server-side Firecrawl execution - use Firecrawl SDK directly
-      console.log('🖥️ MCP executor running Firecrawl on server side');
+    // For all servers (including Crawl4AI), use API routes
+    if (serverConfig.name.toLowerCase().includes('crawl4ai') || serverConfig.name.toLowerCase().includes('firecrawl')) {
+      // Server-side Crawl4AI execution - call Crawl4AI service
+      console.log('🖥️ MCP executor running Crawl4AI on server side');
 
-      const apiKeys = getServerAPIKeys();
-      if (!apiKeys.firecrawl) {
-        throw new Error('FIRECRAWL_API_KEY not configured. Add it to your .env.local file:\nFIRECRAWL_API_KEY=your_key_here');
-      }
-
-      const firecrawl = new FirecrawlApp({ apiKey: apiKeys.firecrawl });
-      
       // Get the action and parameters from the node data
       const nodeData = data as any;
       const action = nodeData.mcpAction || 'scrape';
@@ -219,34 +213,63 @@ export async function executeMCPNode(
       let result: any;
       
       try {
+        // Prepare request body based on action
+        let requestBody: any = {};
+        let endpoint = '';
+
         switch (action) {
           case 'scrape':
-            result = await firecrawl.scrape(getUrl(), {
+            endpoint = '/scrape';
+            requestBody = {
+              url: getUrl(),
               formats: nodeData.useJsonMode ? ['json'] : ['markdown', 'html'],
-            });
+            };
             break;
             
           case 'search':
-            result = await firecrawl.search(getSearchQuery(), {
+            endpoint = '/search';
+            requestBody = {
+              query: getSearchQuery(),
               limit: nodeData.searchLimit || 5,
-            });
+            };
             break;
             
           case 'map':
-            result = await firecrawl.map(getUrl());
+            endpoint = '/map';
+            requestBody = {
+              url: getUrl(),
+            };
             break;
             
           case 'crawl':
-            result = await firecrawl.crawl(getUrl(), {
+            endpoint = '/crawl';
+            requestBody = {
+              url: getUrl(),
               limit: nodeData.crawlLimit || 10,
-            });
+            };
             break;
             
           default:
-            throw new Error(`Unknown Firecrawl action: ${action}`);
+            throw new Error(`Unknown Crawl4AI action: ${action}`);
         }
+
+        // Call Crawl4AI service
+        const response = await fetch(`${CRAWL4AI_SERVICE_URL}${endpoint}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || 'Crawl4AI request failed');
+        }
+
+        result = await response.json();
         
-        console.log('✅ MCP Firecrawl server-side execution completed successfully');
+        console.log('✅ MCP Crawl4AI server-side execution completed successfully');
         
         // Extract specific field based on configuration
         let outputData = result;
@@ -259,24 +282,24 @@ export async function executeMCPNode(
         
         return {
           results: [{
-            server: 'Firecrawl',
+            server: 'Crawl4AI',
             tool: action,
             success: true,
             data: result,
           }],
           extractedField: nodeData.outputField,
           output: outputData,
-          mcpServers: ['Firecrawl'],
+          mcpServers: ['Crawl4AI'],
           toolCalls: [{
-            name: `firecrawl_${action}`,
+            name: `crawl4ai_${action}`,
             arguments: { action, url: getUrl(), query: getSearchQuery() },
             output: result,
           }],
         };
         
       } catch (error) {
-        console.error('❌ MCP Firecrawl server-side execution failed:', error);
-        throw new Error(`Firecrawl ${action} failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        console.error('❌ MCP Crawl4AI server-side execution failed:', error);
+        throw new Error(`Crawl4AI ${action} failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     } else {
       // Generic MCP server support (DeepWiki, etc.)

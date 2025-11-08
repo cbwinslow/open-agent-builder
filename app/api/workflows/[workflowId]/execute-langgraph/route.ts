@@ -42,15 +42,15 @@ export async function POST(
     const userId = authResult.userId;
     
     const apiKeys = {
-      anthropic: userId ? await getLLMApiKey('anthropic', userId) : null || process.env.ANTHROPIC_API_KEY,
-      groq: userId ? await getLLMApiKey('groq', userId) : null || process.env.GROQ_API_KEY,
-      openai: userId ? await getLLMApiKey('openai', userId) : null || process.env.OPENAI_API_KEY,
-      firecrawl: process.env.FIRECRAWL_API_KEY, // Firecrawl keys are still environment-only for now
+      anthropic: (userId ? await getLLMApiKey('anthropic', userId) : undefined) || process.env.ANTHROPIC_API_KEY,
+      groq: (userId ? await getLLMApiKey('groq', userId) : undefined) || process.env.GROQ_API_KEY,
+      openai: (userId ? await getLLMApiKey('openai', userId) : undefined) || process.env.OPENAI_API_KEY,
+      // Crawl4AI does not require API keys
       arcade: process.env.ARCADE_API_KEY,
     };
 
     // Create LangGraph executor
-    const executor = new LangGraphExecutor(workflow, undefined, apiKeys || undefined);
+    const executor = new LangGraphExecutor(workflow, undefined, apiKeys);
 
     // Execute workflow
     const result = await executor.execute(input, { threadId });

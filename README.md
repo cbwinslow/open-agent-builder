@@ -9,7 +9,7 @@
 **Build, test, and deploy AI agent workflows with a visual no-code interface**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Firecrawl](https://img.shields.io/badge/Powered%20by-Firecrawl-orange)](https://firecrawl.dev)
+[![Crawl4AI](https://img.shields.io/badge/Powered%20by-Crawl4AI-blue)](https://github.com/unclecode/crawl4ai)
 
 [Documentation](#documentation) • [Examples](#example-workflows)
 
@@ -19,7 +19,7 @@
 
 ## What is Open Agent Builder?
 
-Open Agent Builder is a visual workflow builder for creating AI agent pipelines powered by [Firecrawl](https://firecrawl.dev). Design complex agent workflows with a drag-and-drop interface, then execute them with real-time streaming updates.
+Open Agent Builder is a visual workflow builder for creating AI agent pipelines with free and open-source web scraping powered by [Crawl4AI](https://github.com/unclecode/crawl4ai). Design complex agent workflows with a drag-and-drop interface, then execute them with real-time streaming updates.
 
 **Perfect for:**
 - Web scraping and data extraction workflows
@@ -41,8 +41,10 @@ Open Agent Builder is a visual workflow builder for creating AI agent pipelines 
 - **Template library** with pre-built workflows
 - **MCP protocol support** for extensible tool integration
 
-### Powered by Firecrawl
-- **Native Firecrawl integration** for web scraping and searching
+### Free & Open Source Web Scraping
+- **Crawl4AI integration** for web scraping and crawling
+- **No API costs** - completely free and self-hosted
+- **LLM-ready output** with markdown and HTML extraction
 
 ### Enterprise Features
 - **LangGraph execution engine** for reliable state management
@@ -57,7 +59,7 @@ Open Agent Builder is a visual workflow builder for creating AI agent pipelines 
 
 | Technology | Purpose |
 |-----------|---------|
-| **[Firecrawl](https://firecrawl.dev)** | Web scraping API for converting websites into LLM-ready data |
+| **[Crawl4AI](https://github.com/unclecode/crawl4ai)** | Free and open-source web scraping library for LLM-ready data extraction |
 | **[Next.js 16 (canary)](https://nextjs.org/)** | React framework with App Router for frontend and API routes |
 | **[TypeScript](https://www.typescriptlang.org/)** | Type-safe development across the stack |
 | **[LangGraph](https://github.com/langchain-ai/langgraph)** | Workflow orchestration engine with state management, conditional routing, and human-in-the-loop support |
@@ -78,7 +80,7 @@ Open Agent Builder is a visual workflow builder for creating AI agent pipelines 
 Before you begin, you'll need:
 
 1. **Node.js 18+** installed on your machine
-2. **Firecrawl API key** (Required for web scraping) - [Get one here](https://firecrawl.dev)
+2. **Python 3.8+** for Crawl4AI service
 3. **Convex account** - [Sign up free](https://convex.dev)
 4. **Clerk account** - [Sign up free](https://clerk.com)
 
@@ -91,7 +93,7 @@ Before you begin, you'll need:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/firecrawl/open-agent-builder.git
+git clone https://github.com/cbwinslow/open-agent-builder.git
 cd open-agent-builder
 npm install
 ```
@@ -159,19 +161,29 @@ Then push the auth config to Convex:
 npx convex dev
 ```
 
-### 5. Set Up Firecrawl (Required)
+### 5. Set Up Crawl4AI Service (Free & Open Source)
 
-**Firecrawl is the core web scraping engine** that powers most workflows.
+**Crawl4AI is the free and open-source web scraping engine** that powers web scraping workflows.
 
-1. Get your API key at [firecrawl.dev](https://firecrawl.dev)
-2. Add to `.env.local`:
+1. Install Crawl4AI dependencies:
 
 ```bash
-# Firecrawl API (REQUIRED)
-FIRECRAWL_API_KEY=fc-...
+cd services/crawl4ai
+pip install -r requirements.txt
+playwright install chromium
 ```
 
-> **Note:** Users can also add their own Firecrawl keys in Settings → API Keys, but having a default key in `.env.local` enables the template workflows.
+2. Start the Crawl4AI service:
+
+```bash
+# In a separate terminal
+cd services/crawl4ai
+python server.py 8000
+```
+
+The service will run on `http://localhost:8000` by default.
+
+> **Note:** Crawl4AI is completely free and doesn't require any API keys. The service URL can be configured via the `CRAWL4AI_SERVICE_URL` environment variable if needed.
 
 ### 6. Optional: Configure Default LLM Provider
 
@@ -190,7 +202,7 @@ OPENAI_API_KEY=sk-...
 GROQ_API_KEY=gsk_...
 ```
 
-> **Important:** For workflows using MCP tools (like Firecrawl integration), Anthropic Claude is currently the recommended provider as it has native MCP support. OpenAI and Groq MCP support is coming soon.
+> **Important:** For workflows using MCP tools (like Crawl4AI integration), Anthropic Claude is currently the recommended provider as it has native MCP support. OpenAI and Groq MCP support is coming soon.
 
 ### 7. Optional: E2B Code Interpreter
 
@@ -210,20 +222,20 @@ Get your key at [e2b.dev](https://e2b.dev)
 ### Development Mode
 
 ```bash
-# Terminal 1: Convex dev server
+# Terminal 1: Crawl4AI service
+cd services/crawl4ai
+python server.py 8000
+
+# Terminal 2: Convex dev server
 npx convex dev
 
-# Terminal 2: Next.js dev server
+# Terminal 3: Next.js dev server
 npm run dev
 ```
 
-Or run both with one command:
-
-```bash
-npm run dev:all
-```
-
 Visit [http://localhost:3000](http://localhost:3000)
+
+> **Note:** Make sure the Crawl4AI service is running before starting the application.
 
 ### Production Build
 
@@ -245,7 +257,7 @@ npm start
 3. **Click "New Workflow"** or select a template
 4. **Try the "Simple Web Scraper" template:**
    - Pre-configured to scrape any website
-   - Uses Firecrawl for extraction
+   - Uses Crawl4AI for free web scraping
    - AI agent summarizes the content
 5. **Click "Run"** and enter a URL
 6. **Watch real-time execution** with streaming updates
@@ -256,7 +268,7 @@ npm start
 |-----------|---------|-------------|
 | **Start** | Workflow entry point | Define input variables |
 | **Agent** | AI reasoning with LLMs | Analyze data, make decisions |
-| **MCP Tool** | External tool calls | Firecrawl scraping, APIs |
+| **MCP Tool** | External tool calls | Crawl4AI scraping, APIs |
 | **Transform** | Data manipulation | Parse JSON, filter arrays |
 | **If/Else** | Conditional logic | Route based on conditions |
 | **While Loop** | Iteration | Process multiple pages |
@@ -281,19 +293,19 @@ Anthropic's MCP implementation provides MCP support, other providers are current
 
 ### Using MCP Tools
 
-MCP tools enable agents to interact with external services like Firecrawl:
+MCP tools enable agents to interact with external services like Crawl4AI:
 
 1. Add an **Agent** node to your workflow
 2. In the node settings, select **MCP Tools**
-3. Choose **Firecrawl** or add a custom MCP server
-4. The agent can now call Firecrawl tools like `scrape`, `search`, `crawl`
+3. Choose **Crawl4AI** or add a custom MCP server
+4. The agent can now call Crawl4AI tools like `scrape`, `map`, `crawl`
 
 **Example workflow with MCP:**
 ```
-Start → Agent (with Firecrawl MCP) → End
+Start → Agent (with Crawl4AI MCP) → End
 ```
 
-The agent can intelligently decide when to scrape pages, search the web, or crawl sites based on your instructions.
+The agent can intelligently decide when to scrape pages or crawl sites based on your instructions.
 
 ---
 
@@ -302,18 +314,18 @@ The agent can intelligently decide when to scrape pages, search the web, or craw
 ### 1. Simple Web Scraper
 **What it does:** Scrape any website and get an AI summary
 
-**Nodes:** Start → Firecrawl Scrape → Agent Summary → End
+**Nodes:** Start → Crawl4AI Scrape → Agent Summary → End
 
 **Try it:**
 ```bash
-Input: https://firecrawl.dev
-Output: "Firecrawl is a web scraping API that converts websites into LLM-ready markdown..."
+Input: https://github.com/unclecode/crawl4ai
+Output: "Crawl4AI is a free and open-source web scraping library that converts websites into LLM-ready markdown..."
 ```
 
 ### 2. Multi-Page Research
-**What it does:** Search web, scrape top results, synthesize findings
+**What it does:** Crawl multiple pages and synthesize findings
 
-**Nodes:** Start → Firecrawl Search → Loop (Scrape Each) → Agent Synthesis → End
+**Nodes:** Start → Crawl4AI Crawl → Loop (Process Each) → Agent Synthesis → End
 
 ### 3. Competitive Analysis
 **What it does:** Research companies, extract structured data, generate report
@@ -321,7 +333,7 @@ Output: "Firecrawl is a web scraping API that converts websites into LLM-ready m
 **Nodes:** Start → Parse Companies → Loop (Research + Extract) → Approval → Export → End
 
 **Features used:**
-- Firecrawl web search
+- Crawl4AI web scraping and crawling
 - Structured JSON extraction
 - While loops for iteration
 - Human approval gates
@@ -341,7 +353,6 @@ Output: "Firecrawl is a web scraping API that converts websites into LLM-ready m
 Users can add their own API keys via **Settings → API Keys**:
 
 - **LLM Providers:** Anthropic (Recommended for MCP), OpenAI, Groq (Required - add at least one)
-- **Firecrawl:** Personal API key (Optional - falls back to environment variable)
 - **Custom MCP Servers:** Authentication tokens
 
 This allows:
@@ -359,9 +370,9 @@ Add custom MCP servers in **Settings → MCP Registry**:
 4. Use in Agent nodes by selecting from MCP tools dropdown
 
 **Supported MCP Servers:**
-- Firecrawl (built-in)
+- Crawl4AI (built-in, free)
 - Custom HTTP endpoints
-- Environment variable substitution: `{API_KEY}`
+- Other MCP-compatible services
 
 ---
 
@@ -383,15 +394,19 @@ Add custom MCP servers in **Settings → MCP Registry**:
 3. **Set environment variables** in Vercel dashboard:
    - `NEXT_PUBLIC_CONVEX_URL` (from Convex)
    - Clerk keys
-   - `FIRECRAWL_API_KEY` (Required)
+   - `CRAWL4AI_SERVICE_URL` (Optional - your Crawl4AI service URL)
    - Optional: Default LLM provider keys
 
-4. **Deploy Convex to production:**
+4. **Deploy Crawl4AI service:**
+   - Deploy the Crawl4AI service to a hosting platform (e.g., Railway, Render, or your own server)
+   - Update `CRAWL4AI_SERVICE_URL` environment variable with the deployed URL
+
+5. **Deploy Convex to production:**
    ```bash
    npx convex deploy
    ```
 
-5. **Update Clerk settings:**
+6. **Update Clerk settings:**
    - Add your Vercel domain to allowed origins
    - Update redirect URLs
 
@@ -402,9 +417,9 @@ Add custom MCP servers in **Settings → MCP Registry**:
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` - Clerk auth
 - `CLERK_SECRET_KEY` - Clerk auth
 - `CLERK_JWT_ISSUER_DOMAIN` - Clerk + Convex integration
-- `FIRECRAWL_API_KEY` - Web scraping
 
 **Optional (can be added in UI instead):**
+- `CRAWL4AI_SERVICE_URL` - URL of your Crawl4AI service (defaults to http://localhost:8000)
 - `ANTHROPIC_API_KEY` - Default Claude provider (Recommended for MCP)
 - `OPENAI_API_KEY` - Default gpt-5 provider (MCP coming soon)
 - `GROQ_API_KEY` - Default Groq provider (MCP coming soon)
@@ -448,7 +463,7 @@ flowchart TD
   end
 
   subgraph Integrations
-    D1["Firecrawl API"]
+    D1["Crawl4AI Service (Free)"]
     D2["LLMs (Claude, gpt-5, Groq)"]
     D3["MCP Servers"]
     C_desc --> D1
@@ -494,8 +509,8 @@ This project is licensed under the MIT License
 
 <div align="center">
 
-**[Star us on GitHub](https://github.com/firecrawl/open-agent-builder)** | **[Try Firecrawl](https://firecrawl.dev)** 
+**[Star us on GitHub](https://github.com/cbwinslow/open-agent-builder)** | **[Try Crawl4AI](https://github.com/unclecode/crawl4ai)** 
 
-Made with love by the Firecrawl team
+Built with free and open-source tools
 
 </div>

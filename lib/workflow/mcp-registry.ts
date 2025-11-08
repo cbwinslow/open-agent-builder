@@ -12,7 +12,7 @@
  * See: /convex/mcpServers.ts for the new implementation
  */
 
-const MCP_REGISTRY_KEY = 'firecrawl_mcp_registry';
+const MCP_REGISTRY_KEY = 'crawl4ai_mcp_registry';
 
 export interface MCPServer {
   id: string;

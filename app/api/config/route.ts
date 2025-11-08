@@ -10,11 +10,10 @@ export async function GET() {
       anthropicConfigured: !!process.env.ANTHROPIC_API_KEY,
       groqConfigured: !!process.env.GROQ_API_KEY,
       openaiConfigured: !!process.env.OPENAI_API_KEY,
-      firecrawlConfigured: !!process.env.FIRECRAWL_API_KEY,
       arcadeConfigured: !!process.env.ARCADE_API_KEY,
+      crawl4aiConfigured: true, // Crawl4AI is self-hosted, no API key needed
       hasKeys: !!(
-        (process.env.ANTHROPIC_API_KEY || process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY) &&
-        process.env.FIRECRAWL_API_KEY
+        process.env.ANTHROPIC_API_KEY || process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY
       ),
     };
 

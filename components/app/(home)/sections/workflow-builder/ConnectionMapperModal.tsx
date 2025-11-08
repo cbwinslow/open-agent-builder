@@ -50,7 +50,7 @@ export default function ConnectionMapperModal({
 
     // Add default keys based on node type
     const nodeType = data.nodeType;
-    if (nodeType === 'mcp' || nodeType === 'firecrawl') {
+    if (nodeType === 'mcp' || nodeType === 'crawl4ai') {
       const outputField = data.outputField || 'full';
       if (outputField === 'markdown') keys.push('markdown');
       else if (outputField === 'html') keys.push('html');

@@ -6,13 +6,13 @@
  */
 
 import { simpleAgent } from './01-simple-agent';
-import { agentWithFirecrawl } from './02-agent-with-firecrawl';
+import { agentWithCrawl4AI } from './02-agent-with-crawl4ai';
 import { scrapeSummarizeDocs } from './03-scrape-summarize-docs';
 import { advancedWorkflow } from './04-advanced-workflow';
 
 export const exampleTemplates = {
   'example-01-simple-agent': simpleAgent,
-  'example-02-agent-with-firecrawl': agentWithFirecrawl,
+  'example-02-agent-with-crawl4ai': agentWithCrawl4AI,
   'example-03-scrape-summarize-docs': scrapeSummarizeDocs,
   'example-04-advanced-workflow': advancedWorkflow,
 };
@@ -26,9 +26,9 @@ export const exampleTemplatesList = [
     estimatedTime: '1-2 minutes',
   },
   {
-    id: 'example-02-agent-with-firecrawl',
-    name: 'Example 2: Agent with Firecrawl',
-    description: 'An agent that can search and scrape the web using Firecrawl',
+    id: 'example-02-agent-with-crawl4ai',
+    name: 'Example 2: Agent with Crawl4AI',
+    description: 'An agent that can scrape and crawl the web using free open-source Crawl4AI',
     difficulty: 'beginner',
     estimatedTime: '2-3 minutes',
   },
