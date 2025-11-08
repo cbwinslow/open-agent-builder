@@ -9,7 +9,6 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
-import Crawl4AILogo from "@/components/icons/Crawl4AILogo";
 
 interface NodePanelProps {
   nodeData: {
