@@ -87,7 +87,7 @@ export default function PasteConfigModal({ isOpen, onClose, onSave }: PasteConfi
                 accessToken = typedConfig.env.CRAWL4AI_API_KEY;
                 url = `https://mcp.crawl4ai.dev/${accessToken}/v2/mcp`;
               } else {
-                url = 'https://mcp.crawl4ai.dev/{CRAWL4AI_API_KEY}/v2/mcp';
+                url = process.env.NEXT_PUBLIC_CRAWL4AI_SERVICE_URL || 'http://localhost:8000';
               }
             } else {
               // Generic MCP server
@@ -183,7 +183,7 @@ export default function PasteConfigModal({ isOpen, onClose, onSave }: PasteConfi
                 Configuration JSON
               </label>
               <a
-                href="https://www.crawl4ai.dev/app"
+                href="https://github.com/crawl4ai/crawl4ai/tree/main/examples"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-heat-100 hover:text-heat-200 underline flex items-center gap-4"

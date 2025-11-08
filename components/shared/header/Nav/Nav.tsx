@@ -249,7 +249,7 @@ export const NAV_ITEMS = [
           icon: <ArrowRight />,
           label: "See Docs",
           description: "Read the docs.",
-          href: "https://github.com/unclecode/crawl4ai/features/extract",
+          href: "https://github.com/unclecode/crawl4ai",
         }}
         sideLabel="/extract"
       />

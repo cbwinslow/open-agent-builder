@@ -185,7 +185,7 @@ export default function ExecutionPanel({
       setInputValues(defaults);
       console.log('Set input values from variables:', defaults);
     } else {
-      setInputValues({ input: 'https://crawl4ai.dev' });
+      setInputValues({ input: 'https://github.com/unclecode/crawl4ai' });
       console.log('Set default input value');
     }
   }, [workflow?.id, inputVariables.length]); // Re-initialize when workflow or variables change

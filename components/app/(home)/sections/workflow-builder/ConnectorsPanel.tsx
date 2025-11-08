@@ -28,7 +28,7 @@ const MCP_TEMPLATES: MCPTemplate[] = [
     url: 'https://mcp.crawl4ai.dev/{CRAWL4AI_API_KEY}/v2/mcp',
     authType: 'api-key',
     apiKeyPlaceholder: 'CRAWL4AI_API_KEY',
-    tools: ['crawl4ai_scrape', 'crawl4ai_search', 'crawl4ai_map', 'crawl4ai_crawl', 'crawl4ai_batch_scrape', 'crawl4ai_extract', 'crawl4ai_check_crawl_status'],
+    tools: ['crawl4ai_scrape', 'crawl4ai_search', 'crawl4ai_map', 'crawl4ai_crawl', 'crawl4ai_batch_scrape'],
     category: 'web',
   },
   {

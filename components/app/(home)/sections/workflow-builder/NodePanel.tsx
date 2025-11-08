@@ -716,7 +716,7 @@ export default function NodePanel({
                                 <span className="text-sm font-medium text-accent-black">{server.name}</span>
                                 {isCrawl4AI && (
                                   <span className="px-6 py-2 bg-heat-4 text-heat-100 rounded-6 text-xs border border-heat-100 font-medium">
-                                    API Key Required
+                                    Self-hosted
                                   </span>
                                 )}
                                 {server.connectionStatus === 'connected' && (
@@ -746,7 +746,7 @@ export default function NodePanel({
                                 )}
                                 {isCrawl4AI && (
                                   <a
-                                    href="https://www.crawl4ai.dev/app/api-keys"
+                                    href="https://github.com/unclecode/crawl4ai"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-xs text-heat-100 hover:text-heat-200 underline block -mt-6"

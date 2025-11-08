@@ -924,7 +924,7 @@ function WorkflowBuilderInner({ onBack, initialWorkflowId, initialTemplateId }: 
                 id: 'crawl4ai',
                 name: 'Crawl4AI',
                 label: 'crawl4ai',
-                url: 'https://mcp.crawl4ai.dev/{CRAWL4AI_API_KEY}/v2/mcp',
+                url: process.env.NEXT_PUBLIC_CRAWL4AI_SERVICE_URL || 'http://localhost:8000',
                 authType: 'Access token / API key',
               },
             ],
