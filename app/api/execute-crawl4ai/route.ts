@@ -8,7 +8,7 @@ const CRAWL4AI_SERVICE_URL = process.env.CRAWL4AI_SERVICE_URL || 'http://localho
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, params, jsonSchema, extractPrompt } = body;
+    const { action, params, extractPrompt } = body;
 
     // Map action to Crawl4AI endpoint
     let endpoint = '';
